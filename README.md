@@ -1,7 +1,7 @@
 # MUFE-Robotics-Line-Maze  
 Iztech Roboleague Yarışması Çizgi Labirent Kategorisi -> [Iztech Roboleague Website](http://irl.iyte.edu.tr/ "Iztech Roboleague")
 
-### Contrubitors
+### Contrubutors
 __*Ahmet Aşık*__ :sparkles:
 
 __*Bilgehan Nal*__ :rocket:
