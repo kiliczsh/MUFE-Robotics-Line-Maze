@@ -7,7 +7,10 @@ void loop() {
    
    setMotorSpeed(MOTOR_RIGHT, 255);
    */
-  
+   QTRRead();
+   pidLineFollow(colorBlack);
+
+      
 }
 
 byte decideWay(byte coordinate[]) {

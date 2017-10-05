@@ -1,9 +1,9 @@
-/*void pidLineFollow(int color){
+void pidLineFollow(int color){
   int speedLeft = initialLeftSpeed;
   int speedRight = initialRightSpeed;
-  if(color == 0)
-    Serial.println("t");
+
   int pos = positionSensor(color);
+
   positionLast = pos;
   float err;
   float err_d;
@@ -19,10 +19,10 @@
   err_d = err -err_past;
   float adj = err*p_const + err_d *d_const;
 
-  MotoMove(speedLeft+adj,speedRight-adj);
+  motoMove(speedLeft+adj,speedRight-adj);
   err_past = err;
 }
-*/
+
 
 void followLine(byte *coordinate, int way) {
   
