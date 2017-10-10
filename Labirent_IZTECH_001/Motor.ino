@@ -4,15 +4,46 @@ void setMotorSpeed(byte motor, int pwm) {
 
 }
 
-void turnLeft() {
+void moveForwardLittle(int dly){
+  motorLeft.setSpeed(100);
+  motorLeft.run(FORWARD);
+  motorRight.setSpeed(100);
+  motorRight.run(FORWARD);
+  delay(dly);
+
+}
+void turnLeft(){
+ 
+    moveForwardLittle(100);
+  
+ 
+    while(!digitalReadFast(2)){
+       motorLeft.setSpeed(100);
+       motorLeft.run(BACKWARD);
+       motorRight.setSpeed(100);
+       motorRight.run(FORWARD);
+    }
+     stopMotor();
+ 
+
   
 }
-
-void turnRight() {
+void turnRight(){
+    moveForwardLittle(100);
   
+ 
+    while(!digitalReadFast(A1)){
+       motorLeft.setSpeed(100);
+       motorLeft.run(FORWARD);
+       motorRight.setSpeed(100);
+       motorRight.run(BACKWARD);
+ 
+
+    }
+     stopMotor();
+
+
 }
-
-
 void motoMove(int leftSpeed, int rightSpeed) {
     motorLeft.setSpeed(leftSpeed);
    motorRight.setSpeed(rightSpeed);
@@ -42,6 +73,28 @@ void motoMove(int leftSpeed, int rightSpeed) {
   }else{
     motorRight.run(RELEASE);
   }
+}
+
+void stopMotor() {
+  motorLeft.run(BACKWARD);
+  motorRight.run(BACKWARD);
+  motorLeft.setSpeed(30);
+  motorRight.setSpeed(30);
+  delay(100);
+  motorLeft.run(RELEASE);
+  motorRight.run(RELEASE);
+}
+
+void go10Step() {
+  resetEncoders();
+
+  do {
+    QTRRead();
+    pidLineFollow(colorBlack);
+    readEncoders();
+  }while(motorLeftCounter < 10);
+  stopMotor();
+    
 }
 
 void driveArdumoto(byte motor, byte dir, byte spd)

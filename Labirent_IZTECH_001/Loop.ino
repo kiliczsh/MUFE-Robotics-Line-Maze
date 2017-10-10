@@ -8,10 +8,26 @@ void loop() {
    setMotorSpeed(MOTOR_RIGHT, 255);
    */
    QTRRead();
-   pidLineFollow(colorBlack);
+  // motorLeftCounter = motorLeftEncoder.read();
+  // motorRightCounter = motorRightEncoder.read();
 
-      
+  
+    pidLineFollow(colorBlack);
+
+    if(isT()) {
+      stopMotor();
+      delay(2000);
+      go10Step();
+      delay(2000); 
+     }
+    
+   
+  
+
+  encoderTest();
+
 }
+
 
 byte decideWay(byte coordinate[]) {
   
