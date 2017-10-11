@@ -1,5 +1,5 @@
 int positionSensor(int color){
-  if(color == colorWhite){
+  if(color == COLOR_WHITE){
     if(!sensorsValue[3] && !sensorsValue[4] ) 
       return 0;
     if(!sensorsValue[0] || !sensorsValue[1])
@@ -31,14 +31,14 @@ int positionSensor(int color){
 }
 
 
-void LinesDetect(){
-  Lines[0] = 0 ;
-  Lines[1] = 0 ;
-  Lines[2] = 0 ;
+void availableLinesDetect(){
+  availableLines[0] = 0 ;
+  availableLines[1] = 0 ;
+  availableLines[2] = 0 ;
   if(sensorsValue[0])
-    Lines[0] = 1;
+    availableLines[0] = 1;
   if(sensorsValue[7])
-    Lines[2] = 1; 
+    availableLines[2] = 1; 
 
 
     
@@ -48,7 +48,7 @@ void QTRRead(){
   for(byte i=0; i<8; i++) {
     sensorsValue[i] = digitalRead(sensorsPin[i]);
   }
-  LinesDetect();
+  availableLinesDetect();
 }
 
 
@@ -59,7 +59,7 @@ void QTRTest(){
     Serial.print(sensorsValue[i]);
     Serial.print(" ");
   }
- Serial.println(" ");
+  Serial.println(" ");
   delay(200);
 }
 
@@ -75,6 +75,10 @@ void encoderTest() {
   motorRightCounter = motorRightEncoder.read();
   Serial.print(motorLeftCounter); Serial.print("  -  "); Serial.println(motorRightCounter);
   
+}
+
+boolean isRoundFinish() {
+  return false;
 }
 
 void resetEncoders() {

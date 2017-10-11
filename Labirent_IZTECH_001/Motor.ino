@@ -1,4 +1,6 @@
 
+#define LIMIT_OF_SPEED 50
+#define STEP_FOR_DETECTING_LINE 10
 
 void setMotorSpeed(byte motor, int pwm) {
 
@@ -17,7 +19,7 @@ void turnLeft(){
     moveForwardLittle(100);
   
  
-    while(!digitalReadFast(2)){
+    while(!digitalRead(2)){
        motorLeft.setSpeed(100);
        motorLeft.run(BACKWARD);
        motorRight.setSpeed(100);
@@ -32,7 +34,7 @@ void turnRight(){
     moveForwardLittle(100);
   
  
-    while(!digitalReadFast(A1)){
+    while(!digitalRead(A1)){
        motorLeft.setSpeed(100);
        motorLeft.run(FORWARD);
        motorRight.setSpeed(100);
@@ -50,10 +52,10 @@ void motoMove(int leftSpeed, int rightSpeed) {
   motorSpeedLeft = leftSpeed ;
   motorSpeedRight = rightSpeed;
 
-  if(motorSpeedLeft<50 && motorSpeedLeft>0){
+  if(motorSpeedLeft<LIMIT_OF_SPEED && motorSpeedLeft>0){
       motorLeft.run(BACKWARD);
     
-  }else if(motorSpeedLeft>50){
+  }else if(motorSpeedLeft>LIMIT_OF_SPEED){
     //ileri
    motorLeft.run(FORWARD);
 
@@ -62,12 +64,12 @@ void motoMove(int leftSpeed, int rightSpeed) {
     motorLeft.run(RELEASE);
   }
 
-  if(motorSpeedRight<50 && motorSpeedRight>0){
+  if(motorSpeedRight<LIMIT_OF_SPEED && motorSpeedRight>0){
  
      motorRight.run(BACKWARD);
       
       
-  }else if(motorSpeedRight>50){
+  }else if(motorSpeedRight>LIMIT_OF_SPEED){
    
      motorRight.run(FORWARD);
   }else{
@@ -75,6 +77,7 @@ void motoMove(int leftSpeed, int rightSpeed) {
   }
 }
 
+// ABS System for robot going forward
 void stopMotor() {
   motorLeft.run(BACKWARD);
   motorRight.run(BACKWARD);
@@ -85,21 +88,21 @@ void stopMotor() {
   motorRight.run(RELEASE);
 }
 
+// Robot goes 10 step to detect the available line.
 void go10Step() {
   resetEncoders();
 
   do {
     QTRRead();
-    pidLineFollow(colorBlack);
+    pidLineFollow(COLOR_BLACK);
     readEncoders();
-  }while(motorLeftCounter < 10);
+  }while(motorLeftCounter < STEP_FOR_DETECTING_LINE);
   stopMotor();
     
 }
 
-void driveArdumoto(byte motor, byte dir, byte spd)
-{
-
+void goTAgain() {
+  
 }
 
 

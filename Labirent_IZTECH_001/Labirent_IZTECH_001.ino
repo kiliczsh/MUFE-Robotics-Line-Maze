@@ -1,12 +1,9 @@
 #include <Encoder.h>
-#include <digitalWriteFast.h>
-
-
 #include <AFMotor.h>
 
 
-#define colorBlack 0
-#define colorWhite 1
+#define COLOR_BLACK 0
+#define COLOR_WHITE 1
 
 //sensors pins
 const byte sensorsPin[] = {A0, A1, A2, A3, A4, A5, 2, 13};
@@ -25,7 +22,7 @@ int motorSpeedLeft;
 int motorSpeedRight;
 
 //Line 
-byte Lines[3];
+byte availableLines[3]; //Keeps the available lines at every T point
 
 
   
@@ -43,27 +40,33 @@ byte Lines[3];
 int positionLast;
 int blackSerialFollow = 0 ;
 int serial =1;
+
 //encoder
+// Interrupts pins are 18, 19, 20, 21 for Arduino Mega
 Encoder motorLeftEncoder(18,19);
 Encoder motorRightEncoder(20,21);
+
+// Encoder Data counter
 int motorLeftCounter=0;
 int motorRightCounter=0;
 
+// all qtr pins are setted as input
 void qtrPinsDefine() {
   for(byte i=0; i<8; i++) {
     pinMode(sensorsPin[i], INPUT_PULLUP);  
   }
 }
 
-
-
-void setup() {
- Serial.begin(9600);
-  qtrPinsDefine();
+void motorInit() {
   motorLeft.setSpeed(0);
   motorLeft.run(RELEASE);
   motorRight.setSpeed(0);
   motorRight.run(RELEASE);
+}
 
+void setup() {
+ Serial.begin(9600);
+  qtrPinsDefine();
+  motorInit();
 
 }
