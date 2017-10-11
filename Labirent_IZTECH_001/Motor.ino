@@ -2,6 +2,8 @@
 #define LIMIT_OF_SPEED 50
 #define STEP_FOR_DETECTING_LINE 10
 
+
+
 void setMotorSpeed(byte motor, int pwm) {
 
 }
@@ -25,7 +27,7 @@ void turnLeft(){
        motorRight.setSpeed(100);
        motorRight.run(FORWARD);
     }
-     stopMotor();
+     stopMotor(WAY_FORWARD);
  
 
   
@@ -42,7 +44,7 @@ void turnRight(){
  
 
     }
-     stopMotor();
+     stopMotor(WAY_FORWARD);
 
 
 }
@@ -52,40 +54,47 @@ void motoMove(int leftSpeed, int rightSpeed) {
   motorSpeedLeft = leftSpeed ;
   motorSpeedRight = rightSpeed;
 
-  if(motorSpeedLeft<LIMIT_OF_SPEED && motorSpeedLeft>0){
+  if( motorSpeedLeft < 0){
       motorLeft.run(BACKWARD);
-    
-  }else if(motorSpeedLeft>LIMIT_OF_SPEED){
-    //ileri
-   motorLeft.run(FORWARD);
-
   }else{
     //stop
-    motorLeft.run(RELEASE);
+    motorLeft.run(FORWARD);
   }
 
-  if(motorSpeedRight<LIMIT_OF_SPEED && motorSpeedRight>0){
- 
-     motorRight.run(BACKWARD);
-      
-      
-  }else if(motorSpeedRight>LIMIT_OF_SPEED){
-   
-     motorRight.run(FORWARD);
+  if( motorSpeedRight < 0){
+      motorRight.run(BACKWARD);
   }else{
-    motorRight.run(RELEASE);
+    //stop
+    motorRight.run(FORWARD);
   }
+
+  
 }
 
 // ABS System for robot going forward
-void stopMotor() {
-  motorLeft.run(BACKWARD);
-  motorRight.run(BACKWARD);
-  motorLeft.setSpeed(30);
-  motorRight.setSpeed(30);
+void stopMotor(int currentWay) {
+  if (currentWay == WAY_FORWARD) {
+    motorLeft.run(BACKWARD);
+    motorRight.run(BACKWARD);
+  } else {
+    motorLeft.run(FORWARD);
+    motorRight.run(FORWARD);
+    
+  }
+  motorLeft.setSpeed(30 * currentWay);
+  motorRight.setSpeed(30 * currentWay);
   delay(100);
   motorLeft.run(RELEASE);
   motorRight.run(RELEASE);
+}
+
+void goBackUntilLine() {
+   do {
+    motoMove(-30, -30);
+    QTRRead();
+    Serial.println();
+  }while(!(sensorsValue[0] || sensorsValue[7]));
+  stopMotor(WAY_BACKWARD);
 }
 
 // Robot goes 10 step to detect the available line.
@@ -94,10 +103,10 @@ void go10Step() {
 
   do {
     QTRRead();
-    pidLineFollow(COLOR_BLACK);
+    motoMove(50, 50);
     readEncoders();
   }while(motorLeftCounter < STEP_FOR_DETECTING_LINE);
-  stopMotor();
+  stopMotor(WAY_FORWARD);
     
 }
 

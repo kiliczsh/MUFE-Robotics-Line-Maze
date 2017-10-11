@@ -5,6 +5,9 @@
 #define COLOR_BLACK 0
 #define COLOR_WHITE 1
 
+#define WAY_FORWARD 1
+#define WAY_BACKWARD -1
+
 //sensors pins
 const byte sensorsPin[] = {A0, A1, A2, A3, A4, A5, 2, 13};
 int sensorsValue[8];

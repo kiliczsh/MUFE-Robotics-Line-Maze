@@ -38,11 +38,30 @@ void availableLinesDetect(){
   if(sensorsValue[0])
     availableLines[0] = 1;
   if(sensorsValue[7])
-    availableLines[2] = 1; 
-
-
-    
+    availableLines[2] = 1;     
 }
+
+void resetAvailableLines() {
+  for(int i=0; i<3; i++) {
+    availableLines[i] = 0;  
+  }  
+}
+
+void detectAvailableLine(boolean left, boolean up, boolean right) {
+    if(left) {
+      if(sensorsValue[7] || sensorsValue[6])
+        availableLines[0] = 1;
+    }
+    if(up) {
+      if(sensorsValue[3] || sensorsValue[4])
+        availableLines[1] = 1;
+    }
+    if(right) {
+      if(sensorsValue[0] || sensorsValue[1])
+        availableLines[2] = 1;
+    }
+}
+
 void QTRRead(){
  
   for(byte i=0; i<8; i++) {
@@ -84,7 +103,6 @@ boolean isRoundFinish() {
 void resetEncoders() {
   motorLeftEncoder.write(0);
   motorRightEncoder.write(0);
-    
 }
 
 void readEncoders() {
