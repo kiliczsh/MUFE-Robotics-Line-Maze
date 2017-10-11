@@ -70,20 +70,28 @@ void motoMove(int leftSpeed, int rightSpeed) {
 
   
 }
-
 // ABS System for robot going forward
-void stopMotor(int currentWay) {
-  if (currentWay == WAY_FORWARD) {
-    motorLeft.run(BACKWARD);
-    motorRight.run(BACKWARD);
-  } else {
+void stopMotorForward() {
     motorLeft.run(FORWARD);
     motorRight.run(FORWARD);
-    
+  motorLeft.setSpeed(30 * currentWay);
+  motorRight.setSpeed(30 * currentWay);
+  delay(50);
+  motorLeft.run(RELEASE);
+  motorRight.run(RELEASE);
+}
+
+void stopMotorBackward(int currentWay) {
+  if (currentWay == WAY_BACKWARD) {
+    motorLeft.run(FORWARD);
+    motorRight.run(FORWARD);
+  } else {
+    motorLeft.run(BACKWARD);
+    motorRight.run(BACKWARD);
   }
   motorLeft.setSpeed(30 * currentWay);
   motorRight.setSpeed(30 * currentWay);
-  delay(100);
+  delay(50);
   motorLeft.run(RELEASE);
   motorRight.run(RELEASE);
 }
@@ -92,20 +100,19 @@ void goBackUntilLine() {
    do {
     motoMove(-30, -30);
     QTRRead();
-    Serial.println();
   }while(!(sensorsValue[0] || sensorsValue[7]));
   stopMotor(WAY_BACKWARD);
 }
 
 // Robot goes 10 step to detect the available line.
-void go10Step() {
+void goGivenStep(int givenStep) {
   resetEncoders();
 
   do {
     QTRRead();
-    motoMove(50, 50);
+    motoMove(100, 100);
     readEncoders();
-  }while(motorLeftCounter < STEP_FOR_DETECTING_LINE);
+  }while(motorLeftCounter < givenStep);
   stopMotor(WAY_FORWARD);
     
 }

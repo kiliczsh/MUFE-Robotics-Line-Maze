@@ -1,28 +1,31 @@
 int way = 2;
 void loop() {
-/*
+
     QTRRead();
   
     pidLineFollow(COLOR_BLACK);
 
     if(isT()) {
-      stopMotor();
+      stopMotor(WAY_FORWARD);
       delay(2000);
       detectChoosableWays();
      }
     
-*/
-goBackUntilLine();
-delay(10000);
+
 }
 
 void detectChoosableWays() {
   resetAvailableLines();
   detectAvailableLine(true, false, true);
-  go10Step();
+  goGivenStep(10);
+  QTRRead();
   detectAvailableLine(false, true, false);
+  delay(1000);
   goBackUntilLine();
   detectAvailableLine(true, false, true);
+  Serial.print(availableLines[0]); Serial.print("  -  ");
+  Serial.print(availableLines[1]); Serial.print("  -  ");
+  Serial.print(availableLines[2]); Serial.println("  -  ");
   
 }
 

@@ -31,15 +31,7 @@ int positionSensor(int color){
 }
 
 
-void availableLinesDetect(){
-  availableLines[0] = 0 ;
-  availableLines[1] = 0 ;
-  availableLines[2] = 0 ;
-  if(sensorsValue[0])
-    availableLines[0] = 1;
-  if(sensorsValue[7])
-    availableLines[2] = 1;     
-}
+
 
 void resetAvailableLines() {
   for(int i=0; i<3; i++) {
@@ -67,7 +59,6 @@ void QTRRead(){
   for(byte i=0; i<8; i++) {
     sensorsValue[i] = digitalRead(sensorsPin[i]);
   }
-  availableLinesDetect();
 }
 
 
