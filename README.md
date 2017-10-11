@@ -12,10 +12,11 @@ __*Muhammed Kılıç*__ :octocat:
 
  ### Task List
 
-- [x] Item 1
-- [ ] Item 2
-- [ ] Item 3
-- [ ] Item 4
+- [x] Robot Building
+- [ ] Algorithm for deciding
+- [x] Line Following
+- [x] Stop at the deciding place
+- [ ] Turning
 
 ### Sample Code Block
 
