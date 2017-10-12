@@ -6,7 +6,7 @@ void loop() {
     pidLineFollow(COLOR_BLACK);
 
     if(isT()) {
-      stopMotor(WAY_FORWARD);
+      stopMotorForward();
       delay(2000);
       detectChoosableWays();
      }

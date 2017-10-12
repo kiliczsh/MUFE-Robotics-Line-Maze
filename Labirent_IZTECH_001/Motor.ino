@@ -27,7 +27,7 @@ void turnLeft(){
        motorRight.setSpeed(100);
        motorRight.run(FORWARD);
     }
-     stopMotor(WAY_FORWARD);
+     stopMotorForward();
  
 
   
@@ -44,7 +44,7 @@ void turnRight(){
  
 
     }
-     stopMotor(WAY_FORWARD);
+     stopMotorForward();
 
 
 }
@@ -72,25 +72,21 @@ void motoMove(int leftSpeed, int rightSpeed) {
 }
 // ABS System for robot going forward
 void stopMotorForward() {
-    motorLeft.run(FORWARD);
-    motorRight.run(FORWARD);
-  motorLeft.setSpeed(30 * currentWay);
-  motorRight.setSpeed(30 * currentWay);
+    motorLeft.run(BACKWARD);
+    motorRight.run(BACKWARD);
+  motorLeft.setSpeed(30);
+  motorRight.setSpeed(30);
   delay(50);
   motorLeft.run(RELEASE);
   motorRight.run(RELEASE);
 }
 
-void stopMotorBackward(int currentWay) {
-  if (currentWay == WAY_BACKWARD) {
+void stopMotorBackward() {
+  
     motorLeft.run(FORWARD);
     motorRight.run(FORWARD);
-  } else {
-    motorLeft.run(BACKWARD);
-    motorRight.run(BACKWARD);
-  }
-  motorLeft.setSpeed(30 * currentWay);
-  motorRight.setSpeed(30 * currentWay);
+  motorLeft.setSpeed(30);
+  motorRight.setSpeed(30);
   delay(50);
   motorLeft.run(RELEASE);
   motorRight.run(RELEASE);
@@ -101,7 +97,7 @@ void goBackUntilLine() {
     motoMove(-30, -30);
     QTRRead();
   }while(!(sensorsValue[0] || sensorsValue[7]));
-  stopMotor(WAY_BACKWARD);
+  stopMotorBackward();
 }
 
 // Robot goes 10 step to detect the available line.
@@ -113,7 +109,7 @@ void goGivenStep(int givenStep) {
     motoMove(100, 100);
     readEncoders();
   }while(motorLeftCounter < givenStep);
-  stopMotor(WAY_FORWARD);
+  stopMotorForward();
     
 }
 
