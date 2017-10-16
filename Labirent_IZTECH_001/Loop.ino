@@ -26,7 +26,11 @@ void detectChoosableWays() {
   Serial.print(availableLines[1]); Serial.print("  -  ");
   Serial.print(availableLines[2]); Serial.println("  -  ");
   if(availableLines[0] &&availableLines[1])
-    delay(5000);
+    turnLeft();
+  else if(availableLines[2] && availableLines[1] )
+    turnRight();
+  else
+    turnLeft();
    resetAvailableLines();
   
 }
