@@ -40,23 +40,24 @@ void resetAvailableLines() {
 }
 
 void detectAvailableLine(boolean left, boolean up, boolean right) {
+     if(right) {
+      if(sensorsValue[0] || sensorsValue[1]|| sensorsValue[8])
+        availableLines[2] = 1;
+    }
     if(left) {
-      if(sensorsValue[7] || sensorsValue[6])
+      if(sensorsValue[7] || sensorsValue[6] || sensorsValue[9])
         availableLines[0] = 1;
     }
     if(up) {
-      if(sensorsValue[3] || sensorsValue[4])
+      if(sensorsValue[3] || sensorsValue[4] || sensorsValue[2] ||sensorsValue[5])
         availableLines[1] = 1;
     }
-    if(right) {
-      if(sensorsValue[0] || sensorsValue[1])
-        availableLines[2] = 1;
-    }
+
 }
 
 void QTRRead(){
  
-  for(byte i=0; i<8; i++) {
+  for(byte i=0; i<10; i++) {
     sensorsValue[i] = digitalRead(sensorsPin[i]);
   }
 }
@@ -65,7 +66,7 @@ void QTRRead(){
 
 void QTRTest(){
   QTRRead();
-  for(int i = 0 ; i < 8 ; i++){
+  for(int i = 0 ; i < 10 ; i++){
     Serial.print(sensorsValue[i]);
     Serial.print(" ");
   }
@@ -74,8 +75,11 @@ void QTRTest(){
 }
 
 boolean isT() {
-  if(sensorsValue[0] == 1 || sensorsValue[7] == 1)
-    return true;
+  if(sensorsValue[0] == 1 || sensorsValue[7] == 1){
+ 
+     return true;
+  }
+   
    else 
     return false;  
 }

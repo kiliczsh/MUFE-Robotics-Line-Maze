@@ -11,21 +11,23 @@ void loop() {
       detectChoosableWays();
      }
     
+    // QTRTest();
 
 }
 
 void detectChoosableWays() {
-  resetAvailableLines();
+  QTRRead();
   detectAvailableLine(true, false, true);
   goGivenStep(10);
   QTRRead();
   detectAvailableLine(false, true, false);
   delay(1000);
-  goBackUntilLine();
-  detectAvailableLine(true, false, true);
   Serial.print(availableLines[0]); Serial.print("  -  ");
   Serial.print(availableLines[1]); Serial.print("  -  ");
   Serial.print(availableLines[2]); Serial.println("  -  ");
+  if(availableLines[0] &&availableLines[1])
+    delay(5000);
+   resetAvailableLines();
   
 }
 

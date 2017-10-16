@@ -76,7 +76,7 @@ void stopMotorForward() {
     motorRight.run(BACKWARD);
   motorLeft.setSpeed(30);
   motorRight.setSpeed(30);
-  delay(50);
+  delay(100);
   motorLeft.run(RELEASE);
   motorRight.run(RELEASE);
 }

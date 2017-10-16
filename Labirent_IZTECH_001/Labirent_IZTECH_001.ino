@@ -9,8 +9,9 @@
 #define WAY_BACKWARD -1
 
 //sensors pins
-const byte sensorsPin[] = {A0, A1, A2, A3, A4, A5, 2, 13};
-int sensorsValue[8];
+const byte sensorsPin[] = {A0, A1, A2, A3, A4, A5, 2, 13,22,23};
+//23 sol 22 sag
+int sensorsValue[10];
 
 //Motor pins
 AF_DCMotor motorLeft(1); 
@@ -55,7 +56,7 @@ int motorRightCounter=0;
 
 // all qtr pins are setted as input
 void qtrPinsDefine() {
-  for(byte i=0; i<8; i++) {
+  for(byte i=0; i<10; i++) {
     pinMode(sensorsPin[i], INPUT_PULLUP);  
   }
 }
