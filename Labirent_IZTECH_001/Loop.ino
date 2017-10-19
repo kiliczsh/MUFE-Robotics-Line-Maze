@@ -1,37 +1,42 @@
 int way = 2;
 void loop() {
-
-    QTRRead();
-  
-    pidLineFollow(COLOR_BLACK);
-
-    if(isT()) {
-      stopMotorForward();
-      delay(2000);
-      detectChoosableWays();
-     }
-    
-    // QTRTest();
-
+  goOneStep();
 }
-
+void goOneStep(){
+  QTRRead();
+  pidLineFollow();
+  readEncoders();
+  boolean isTi = isT();
+  if(isTi || motorLeftCounter > 65 || motorRightCounter> 65 ){
+     stopMotorForward();
+     delay(500);
+     if(isTi)
+      detectChoosableWays();
+  /*
+    if(availableLines[0]  && !availableLines[1])
+      turnLeft();
+     if(availableLines[2] &&!availableLines[1])
+      turnRight();
+     if(availableLines[2]&& availableLines[1]&& availableLines[0]){
+         stopMotorForward();
+        delay(2000);
+        turnRight();
+     }
+    */
+    /*decide action from availableLines*/
+    resetEncoders();
+    resetAvailableLines();
+  }
+}
 void detectChoosableWays() {
   QTRRead();
   detectAvailableLine(true, false, true);
   goGivenStep(10);
+  delay(100);
   QTRRead();
   detectAvailableLine(false, true, false);
-  delay(1000);
-  Serial.print(availableLines[0]); Serial.print("  -  ");
-  Serial.print(availableLines[1]); Serial.print("  -  ");
-  Serial.print(availableLines[2]); Serial.println("  -  ");
-  if(availableLines[0] &&availableLines[1])
-    turnLeft();
-  else if(availableLines[2] && availableLines[1] )
-    turnRight();
-  else
-    turnLeft();
-   resetAvailableLines();
+
+  delay(100);
   
 }
 

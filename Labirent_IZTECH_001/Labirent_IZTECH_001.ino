@@ -7,12 +7,13 @@
 
 #define WAY_FORWARD 1
 #define WAY_BACKWARD -1
+#define TURN_BACK 9
+
 
 //sensors pins
 const byte sensorsPin[] = {A0, A1, A2, A3, A4, A5, 2, 13,22,23};
 //23 sol 22 sag
 int sensorsValue[10];
-
 //Motor pins
 AF_DCMotor motorLeft(1); 
 AF_DCMotor motorRight(4); 
@@ -20,26 +21,22 @@ int qrt;
 //motor initial Speed
 const int initialLeftSpeed = 100;
 const int initialRightSpeed = 100;
-
 //current
 int motorSpeedLeft;
 int motorSpeedRight;
-
 //Line 
 byte availableLines[3]; //Keeps the available lines at every T point
 
-
-  
 //pid values
- float err_past = 0;
- float p_const = 10; // initial error
- float d_const = 10;
+float err_past = 0;
+float p_const = 10; // initial error
+float d_const = 10;
 //inner qtr 
- float p_const_t1 =45; 
- float d_const_t1 = 45;
+float p_const_t1 =45; 
+float d_const_t1 = 45;
 //outer qtr
- float p_const_t2 = 22;
- float d_const_t2 = 22;
+float p_const_t2 = 22;
+float d_const_t2 = 22;
 
 int positionLast;
 int blackSerialFollow = 0 ;
@@ -69,8 +66,8 @@ void motorInit() {
 }
 
 void setup() {
- Serial.begin(9600);
+  Serial.begin(9600);
   qtrPinsDefine();
   motorInit();
-
+  delay(100);
 }

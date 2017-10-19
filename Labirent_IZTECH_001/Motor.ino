@@ -16,64 +16,84 @@ void moveForwardLittle(int dly){
   delay(dly);
 
 }
-void turnLeft(){
- 
-    moveForwardLittle(100);
-  
- 
-    while(!digitalRead(2)){
-       motorLeft.setSpeed(100);
-       motorLeft.run(BACKWARD);
-       motorRight.setSpeed(100);
-       motorRight.run(FORWARD);
-    }
-     stopMotorForward();
- 
 
-  
+void turnBack(){
+    moveForwardLittle(300);
+  resetEncoders();
+   while(motorRightEncoder.read()<80   || !digitalRead(2) ){
+    motorLeft.setSpeed(100);
+    motorLeft.run(BACKWARD);
+    motorRight.setSpeed(100);
+    motorRight.run(FORWARD);
+  }
+  stopMotorLeftTurn();
+  resetEncoders();
+}
+void turnLeft(){
+  moveForwardLittle(100);
+  while(!digitalRead(2)){
+    motorLeft.setSpeed(100);
+    motorLeft.run(BACKWARD);
+    motorRight.setSpeed(150);
+    motorRight.run(FORWARD);
+  }
+  stopMotorLeftTurn();
+  resetEncoders();
+
 }
 void turnRight(){
-    moveForwardLittle(100);
-  
+  moveForwardLittle(100);
  
-    while(!digitalRead(A1)){
-       motorLeft.setSpeed(100);
-       motorLeft.run(FORWARD);
-       motorRight.setSpeed(100);
-       motorRight.run(BACKWARD);
- 
-
+  while(!digitalRead(A1)){
+    motorRight.setSpeed(100);
+    motorRight.run(BACKWARD);
+    motorLeft.setSpeed(150);
+    motorLeft.run(FORWARD);
     }
-     stopMotorForward();
+  stopMotorRightTurn();
 
 
 }
 void motoMove(int leftSpeed, int rightSpeed) {
-    motorLeft.setSpeed(leftSpeed);
-   motorRight.setSpeed(rightSpeed);
+  motorLeft.setSpeed(leftSpeed);
+  motorRight.setSpeed(rightSpeed);
   motorSpeedLeft = leftSpeed ;
   motorSpeedRight = rightSpeed;
-
   if( motorSpeedLeft < 0){
       motorLeft.run(BACKWARD);
   }else{
-    //stop
     motorLeft.run(FORWARD);
   }
-
   if( motorSpeedRight < 0){
       motorRight.run(BACKWARD);
   }else{
-    //stop
     motorRight.run(FORWARD);
   }
-
+}
+void stopMotorRightTurn(){
   
+  motorLeft.run(BACKWARD);
+  motorRight.run(FORWARD);
+  motorRight.setSpeed(30);
+  motorLeft.setSpeed(30);
+  delay(100);
+  motorLeft.run(RELEASE);
+  motorRight.run(RELEASE);
+  
+}
+void stopMotorLeftTurn(){
+  motorRight.run(BACKWARD);
+  motorLeft.run(FORWARD);
+  motorRight.setSpeed(30);
+  motorLeft.setSpeed(30);
+  delay(100);
+  motorLeft.run(RELEASE);
+  motorRight.run(RELEASE);
 }
 // ABS System for robot going forward
 void stopMotorForward() {
-    motorLeft.run(BACKWARD);
-    motorRight.run(BACKWARD);
+  motorLeft.run(BACKWARD);
+  motorRight.run(BACKWARD);
   motorLeft.setSpeed(30);
   motorRight.setSpeed(30);
   delay(100);
@@ -82,9 +102,8 @@ void stopMotorForward() {
 }
 
 void stopMotorBackward() {
-  
-    motorLeft.run(FORWARD);
-    motorRight.run(FORWARD);
+  motorLeft.run(FORWARD);
+  motorRight.run(FORWARD);
   motorLeft.setSpeed(30);
   motorRight.setSpeed(30);
   delay(50);
