@@ -17,7 +17,7 @@ __*Muhammed Kılıç*__ :octocat:
 - [x] Line Following
 - [x] Stop at the deciding place
 - [x] Encoder data
-- [ ] Turning
+- [x] Turning
 
 ### Sample Code Block
 
